@@ -89,3 +89,5 @@ MySQL Database used with JPA Hibernate.
 spring.datasource.url=jdbc:mysql://localhost:3306/ecommerce
 spring.datasource.username=root
 spring.datasource.password=YOUR_PASSWORD
+```
+
