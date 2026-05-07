@@ -1,0 +1,35 @@
+package com.example.ecommerce.exception;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+	@ExceptionHandler(RuntimeException.class)
+	public Map<String, Object> handleRuntimeException(RuntimeException ex) {
+
+	    Map<String, Object> error = new HashMap<>();
+
+	    error.put("message", ex.getMessage());
+	    error.put("status", 500);
+
+	    return error;
+	}
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String, String> handleValidation(
+            MethodArgumentNotValidException ex) {
+
+        Map<String, String> errors = new HashMap<>();
+
+        ex.getBindingResult().getFieldErrors().forEach(error -> {
+            errors.put(error.getField(), error.getDefaultMessage());
+        });
+
+        return errors;
+    }
+}
